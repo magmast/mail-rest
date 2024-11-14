@@ -1,0 +1,5 @@
+services:
+  mail-rest:
+    build: .
+    network_mode: host
+    env_file: .env

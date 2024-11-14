@@ -1,29 +1,21 @@
 {
   "name": "mail-rest",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push",
-    "db:drop": "drizzle-kit drop"
+    "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.1",
-    "date-fns": "^4.1.0",
-    "drizzle-orm": "^0.36.1",
-    "drizzle-zod": "^0.5.1",
     "hono": "^4.6.10",
     "imapflow": "^1.0.169",
     "mailparser": "^3.7.1",
-    "nanoid": "^5.0.8",
     "postal-mime": "^2.3.2",
+    "validator": "^13.12.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@libsql/client": "^0.14.0",
     "@types/bun": "^1.1.13",
     "@types/imapflow": "^1.0.19",
     "@types/mailparser": "^3.4.5",
-    "drizzle-kit": "^0.28.0"
+    "@types/validator": "^13.12.2"
   }
 }

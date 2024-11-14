@@ -1,17 +1,12 @@
 import { Hono } from "hono";
-import adminRoute from "~/routes/admin";
-import authRoute from "~/routes/auth";
+import { logger } from "hono/logger";
 import mailboxesRoute from "~/routes/mailboxes";
-import mailsRoute from "./routes/mails";
+import { authorized } from "~/lib/auth";
 
 const app = new Hono();
 
-app.route("/admin", adminRoute);
-
-app.route("/auth", authRoute);
+app.use(logger(), authorized);
 
 app.route("/mailboxes", mailboxesRoute);
-
-app.route("/mails", mailsRoute);
 
 export default app;

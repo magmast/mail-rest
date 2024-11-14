@@ -1,6 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { ImapFlow } from "imapflow";
-import "~/auth";
+import { env } from "~/lib/env";
 
 declare module "hono" {
   interface ContextVariableMap {
@@ -8,15 +8,21 @@ declare module "hono" {
   }
 }
 
-export const imapClient = createMiddleware(async (c, next) => {
-  const account = c.get("account");
+export function decodeMailboxPath(urlEncoded: string) {
+  return decodeURIComponent(urlEncoded);
+}
 
+export function encodeMailboxPath(path: string) {
+  return encodeURIComponent(path);
+}
+
+export const imapClient = createMiddleware(async (c, next) => {
   const imapClient = new ImapFlow({
-    host: account.host,
-    port: account.port,
+    host: env.IMAP_HOST,
+    port: env.IMAP_PORT,
     auth: {
-      user: account.username,
-      pass: account.password,
+      user: env.IMAP_USER,
+      pass: env.IMAP_PASS,
     },
     secure: false,
     tls: {

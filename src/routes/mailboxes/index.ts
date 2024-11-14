@@ -1,15 +1,14 @@
 import { Hono } from "hono";
-import { authorized } from "~/auth";
-import { imapClient } from "~/mail";
+import { imapClient } from "~/lib/mail";
+import messagesRoute from "./messages";
 
 const app = new Hono();
 
-app.use(authorized, imapClient);
+app.use(imapClient);
 
 app.get("/", async (c) => {
   const client = c.get("imapClient");
-  const responses = await client.list();
-  return c.json(
+  const data = await client.list().then((responses) =>
     responses.map((response) => ({
       name: response.name,
       path: response.path,
@@ -17,6 +16,9 @@ app.get("/", async (c) => {
       flags: Array.from(response.flags),
     }))
   );
+  return c.json({ data });
 });
+
+app.route("/", messagesRoute);
 
 export default app;
